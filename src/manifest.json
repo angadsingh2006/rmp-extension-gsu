@@ -1,0 +1,14 @@
+{
+    "manifest_version" : 3,
+    "name" : "GSU RMP Extension",
+    "version" : "1.0.0",
+    "description" : "Matches best rated professor with class selected from GSU directory",
+    "permissions" : ["storage","activeTab"],
+    "host_permissions" : ["https://registration.gosolar.gsu.edu/*" , "https://www.ratemyprofessors.com/*"],
+    "background" : {"service_worker" : "background.js"},
+    "content_scripts" : [{"matches" : ["https://registration.gosolar.gsu.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration"] ,
+                        "js" : ["content.js"] ,
+                         "css" : ["styles.css"] , 
+                         "run_at": "document_idle"}],
+    "action" : {"default_popup" : "popup.html"}
+}
