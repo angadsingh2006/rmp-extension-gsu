@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>GSU RMP Extension</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            width: 220px;
+            padding: 12px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 14px;
+            margin: 0 0 8px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        #status {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>GSU RMP Ratings</h1>
+    <label>
+        <input type="checkbox" id="enabledToggle" />
+        Show ratings on registration page
+    </label>
+    <div id="status">Reload the registration tab after changing this.</div>
+    <script src="popup.js"></script>
+</body>
+</html>

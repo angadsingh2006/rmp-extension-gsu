@@ -1,12 +1,15 @@
 {
   "name": "rmp-extension-gsu",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "description": "Chrome extension that injects Rate My Professors ratings into GSU's course registration portal.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "description": ""
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "eslint": "^10.10.0",
+    "globals": "^17.12.0"
+  }
 }

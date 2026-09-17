@@ -1,0 +1,22 @@
+/* The portal truncates td[data-property="instructor"] with overflow/ellipsis,
+   which silently clips our injected badge. !important overrides the portal's
+   own rules since we don't control their specificity. */
+td[data-property="instructor"] {
+    overflow: visible !important;
+    text-overflow: unset !important;
+    white-space: normal !important;
+    height: auto !important;
+}
+
+.rmp-rating-badge {
+    display: block;
+    margin-top: 2px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 0.85em;
+    font-weight: 600;
+    white-space: nowrap;
+    width: fit-content;
+}
