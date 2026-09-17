@@ -11,6 +11,7 @@ Registering for classes means constantly alt-tabbing to Rate My Professors to ch
 - Automatically detects instructor names as course sections load or filter, with no manual lookup required
 - Injects a rating badge (average rating, number of ratings) directly next to each instructor's name
 - Toggle to enable/disable the feature from the extension popup, with the setting persisted across sessions
+- Caches professor ratings in `chrome.storage` so repeated lookups for the same instructor across a search session don't re-hit the RMP API
 - Fails gracefully — if a professor isn't found or a request fails, the extension doesn't break the page around it
 
 ## Tech stack

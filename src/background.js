@@ -6,6 +6,27 @@ const RMP_HEADERS = {
     'origin': 'https://www.ratemyprofessors.com'
 };
 
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+
+function cacheKeyFor(lastName) {
+    return `rmpCache:${lastName.toLowerCase()}`;
+}
+
+async function getCachedRatings(lastName) {
+    const key = cacheKeyFor(lastName);
+    const stored = await chrome.storage.local.get(key);
+    const entry = stored[key];
+    if (!entry || Date.now() - entry.cachedAt > CACHE_TTL_MS) {
+        return null;
+    }
+    return entry.ratings;
+}
+
+async function setCachedRatings(lastName, ratings) {
+    const key = cacheKeyFor(lastName);
+    await chrome.storage.local.set({ [key]: { ratings, cachedAt: Date.now() } });
+}
+
 const SEARCH_TEACHERS_QUERY = `
     query NewSearchTeachersQuery($query: TeacherSearchQuery!) {
         newSearch {
@@ -90,7 +111,15 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
     (async () => {
         try {
-            const teacherId = await findTeacherId(instructorName.trim());
+            const trimmedName = instructorName.trim();
+
+            const cached = await getCachedRatings(trimmedName);
+            if (cached) {
+                sendResponse({ id, ...cached });
+                return;
+            }
+
+            const teacherId = await findTeacherId(trimmedName);
             if (!teacherId) {
                 sendResponse({ id, error: 'No matching professor found on RMP' });
                 return;
@@ -102,6 +131,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
                 return;
             }
 
+            await setCachedRatings(trimmedName, ratings);
             sendResponse({ id, ...ratings });
         } catch (err) {
             console.error('RMP extension: request failed for', instructorName, err);
